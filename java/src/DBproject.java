@@ -323,7 +323,7 @@ public class DBproject{
          System.out.print("\tEnter nationality: ");
          String nationality = in.readLine();
 		
-         String query = "INSERT INTO Pilot(" + nextID + ", " + fullname + ", " + nationality + ");";
+         String query = "INSERT INTO Pilot(" + nextID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
          esql.executeQuery(query);
          
