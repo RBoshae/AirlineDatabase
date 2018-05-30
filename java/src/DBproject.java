@@ -312,7 +312,7 @@ public class DBproject{
 		
          // my code
 		 String getID = "SELECT MAX(id) FROM Pilot;";
-         int currID = esql.executeQuery(getID);
+         int currID = esql.executeQueryAndReturnResult(getID);
 		 System.out.print("current ID: " + currID);
 		 
 		 int nextID = currID + 1;
