@@ -322,7 +322,7 @@ public class DBproject{
 			System.out.print("Enter number of seats: ");
 			String seats = in.readLine();
 
-			System.out.print("USER INPUT: " + make " " + " " model + " " + age + " " + seats);
+			System.out.print("USER INPUT: " + make + " " + " " model + " " + age + " " + seats);
 		}catch(Exception e){
 			System.err.println (e.getMessage());
 		}
