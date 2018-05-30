@@ -328,7 +328,7 @@ public class DBproject{
 		}
 		try{
 
-			int maxIDQuery = esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;");
+			List maxIDQuery = esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;").get(0).get(0);
 			System.out.println("Max ID is: " + maxIDQuery);
 
       // String query = "INSERT INTO plane VALUES (";
