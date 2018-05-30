@@ -305,6 +305,9 @@ public class DBproject{
 	}
 
 	public static void AddPilot(DBproject esql) {//2
+	
+	// my code
+	
 	}
 
 	public static void AddFlight(DBproject esql) {//3
