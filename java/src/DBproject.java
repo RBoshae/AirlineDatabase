@@ -322,18 +322,18 @@ public class DBproject{
 			System.out.print("Enter number of seats: ");
 			String seats = in.readLine();
 
-			System.out.print("USER INPUT: " + make + " " + " " + model + " " + age + " " + seats);
+			// System.out.print("USER INPUT: " + make + " " + " " + model + " " + age + " " + seats); // Debugging
 		}catch(Exception e){
 			System.err.println (e.getMessage());
 		}
 		try{
-         String query = "SELECT * FROM Catalog WHERE cost < ";
-         System.out.print("\tEnter cost: $");
-         String input = in.readLine();
-         query += input;
 
-         int rowCount = esql.executeQuery(query);
-         System.out.println ("total row(s): " + rowCount);
+			int maxIDQuery = "SELECT max(id) FROM plane";
+			System.out.println("Max ID is: " + maxIDQuery);
+
+      // String query = "INSERT INTO plane VALUES (";
+      // query += "USER INPUT: " + make + " " + " " + model + " " + age + " " + seats;
+      // esql.executeQuery(query);
       }catch(Exception e){
          System.err.println (e.getMessage());
       }
