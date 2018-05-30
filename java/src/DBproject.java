@@ -306,7 +306,32 @@ public class DBproject{
 
 	public static void AddPilot(DBproject esql) {//2
 	
-	// my code
+	
+	
+	try{
+		
+         // my code
+		 String query = "SELECT MAX(id) FROM Pilot";
+         int currID = esql.executeQuery(query);
+		 System.out.print("current ID: " + currID);
+		 
+		 int nextID = currID + 1;
+		 
+         System.out.print("\tEnter fullname: ");
+         String fullname = in.readLine();
+	
+         System.out.print("\tEnter nationality: ");
+         String nationality = in.readLine();
+		
+         String query = "INSERT INTO Pilot(" + nextID + ", " + fullname + ", " + nationality + ");";
+
+         esql.executeQuery(query);
+         
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+	
+	
 	
 	}
 
