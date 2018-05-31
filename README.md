@@ -1,6 +1,6 @@
 # Database Management Systems Project: Airline Client Application
 
-In this project, an implementation of a PostgreSQL Database.The project includes a set of dummy data, scripts to load the data in DB, and Java code to build the client application.
+In this project, an implementation of a PostgreSQL Database. The project includes a set of dummy data, scripts to load the data in DB, and Java code to build the client application.
 Specifically we implement the following functionality using the given schema:
 * Add Plane: Ask the user for details of a plane and add it to the DB
 * Add Pilot: Ask the user for details of a pilot and add it to the DB
