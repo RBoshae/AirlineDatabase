@@ -322,15 +322,12 @@ public class DBproject{
 			// Prompt user for seats
 			System.out.print("Enter number of seats: ");
 			seats = in.readLine();
-
-			// System.out.print("USER INPUT: " + make + " " + " " + model + " " + age + " " + seats); // Debugging
 		}catch(Exception e){
 			System.err.println (e.getMessage());
 		}
 		try{
 
 			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;").get(0).get(0));
-			System.out.println("Max ID is: " + maxIDQuery);
 
 			// increment maxIDQuery, used as primary key.
 			maxIDQuery++;
