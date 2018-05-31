@@ -44,7 +44,7 @@ Next, navigate to the src folder to compile and run the program. Type the follow
 
 Each selection code allows you to implement the respective action/query.
 
-## Author
+## Authors
 
 * **Rick Boshae** - [Personal Website](rboshae.github.io)
 * **Jason Zellmer** - [Github Profile](https://github.com/jzell001)
