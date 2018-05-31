@@ -335,9 +335,9 @@ public class DBproject{
 			// increment maxIDQuery, used as primary key.
 			maxIDQuery++;
 
-      String query = "INSERT INTO plane VALUES ("
-									 + "\'" + make + "\', \'" +  model + "\', "
-									 + age  + ", " + seats + ");";
+      String query = "INSERT INTO plane VALUES (" + maxIDQuery
+									 + ", \'" + make + "\', \'" +  model + "\', "
+									 + age + ", " + seats + ");";
       esql.executeQuery(query);
 			System.out.print("Added plane to database.");
       }catch(Exception e){
