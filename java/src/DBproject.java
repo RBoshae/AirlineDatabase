@@ -336,7 +336,7 @@ public class DBproject{
 
       String query = "INSERT INTO plane VALUES ("
 									 + "\'" + make + "\', \'" +  model + "\', "
-									 + age + ", " + seats ");";
+									 + age + ", " + seats + ");";
       esql.executeQuery(query);
 			System.out.print("Added plane to database.");
       }catch(Exception e){
