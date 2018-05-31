@@ -328,7 +328,7 @@ public class DBproject{
 		}
 		try{
 
-			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;").get(0).get(0);
+			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;").get(0).get(0));
 			System.out.println("Max ID is: " + maxIDQuery);
 
 			// increment maxIDQuery, used as primary key.
