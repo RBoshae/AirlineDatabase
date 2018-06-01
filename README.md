@@ -46,7 +46,7 @@ Each selection code allows you to implement the respective action/query.
 
 ## Authors
 
-* **Rick Boshae** - [Personal Website](rboshae.github.io)
+* **Rick Boshae** - [Personal Website](https://rboshae.github.io/)
 * **Jason Zellmer** - [Github Profile](https://github.com/jzell001)
 
 ## License
