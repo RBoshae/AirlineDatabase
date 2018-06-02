@@ -331,7 +331,7 @@ public class DBproject{
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
 				System.out.println("Add plane(y/n)?");
 				String answer = in.readLine();
-				System.out.print(answer);
+			
 				if (answer.equals("y") || answer.equals("yes")) {
 					 keepon = false;
 				 }
