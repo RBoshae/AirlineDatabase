@@ -331,7 +331,7 @@ public class DBproject{
 									 + ", \'" + make + "\', \'" +  model + "\', "
 									 + age + ", " + seats + ");";
       esql.executeUpdate(query);
-			System.out.print("Plane added to database.");
+			System.out.print("Plane added to database.\n");
 
 			esql.executeQueryAndPrintResult("SELECT * From plane Where plane.id="+maxIDQuery+";");
 
