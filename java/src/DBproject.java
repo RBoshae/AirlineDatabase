@@ -322,18 +322,16 @@ public class DBproject{
 			System.out.print("Enter number of seats: ");
 			String seats = in.readLine();
 
+			// maxIDQuery is the current max primary id value
 			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM plane;").get(0).get(0));
 
-			// increment maxIDQuery, used as primary key.
-			maxIDQuery++;
+			maxIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
 
       String query = "INSERT INTO plane VALUES (" + maxIDQuery
 									 + ", \'" + make + "\', \'" +  model + "\', "
-									 + age + ", " + seats + ");";
-      esql.executeUpdate(query);
-			System.out.println(query)
+									 + age + ", " + seats + ");";	// prepare insert statement
+      esql.executeUpdate(query); 	//insert new plane into database
 
-			esql.executeQueryAndPrintResult("SELECT * From plane Where plane.id="+maxIDQuery+";");
 			System.out.println("Plane added to database.");
 
       }catch(Exception e){
