@@ -332,7 +332,9 @@ public class DBproject{
 				System.out.println("Add plane(y/n)?");
 				String answer = in.readLine();
 				System.out.print(answer);
-				if (answer=="y" || answer=="yes") keepon = false;
+				if (answer=="y" || answer=="yes") {
+					 keepon = false;
+				 }
 
 			}
 
