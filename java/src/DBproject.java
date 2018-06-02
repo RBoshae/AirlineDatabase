@@ -310,7 +310,8 @@ public class DBproject{
 			//=============//
 			// User Prompt //
 			//=============//
-			while (true){
+			boolean keepon = true;
+			while (keepon){
 				// Prompt user for make
 				System.out.print("Enter make: ");
 				make = in.readLine();
@@ -330,7 +331,7 @@ public class DBproject{
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
 				System.out.println("Add plane(y/n)?");
 				String anwser = in.readLine();
-				if (anwser=="y" || anwser=="yes") break;
+				if (anwser=="y" || anwser=="yes") keepon = false;
 
 			}
 
