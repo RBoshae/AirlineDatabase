@@ -377,29 +377,29 @@ public class DBproject{
 			while (keepon){
 				// Prompt user for flight cost
 				System.out.print("Enter flight cost (Whole Number Only): ");
-				cost = in.readLine();
+				cost = Integer.valueOf(in.readLine());
 				while (cost < 0) {
 					System.out.print("The flight cost should be greater than 0. \nPlease try again.\n");
 					System.out.println("Enter flight cost (Whole Number Only): ");
-					cost = in.readLine();
+					cost = Integer.valueOf(in.readLine());
 				}
 
 				// Prompt user for number of tickets sold
 				System.out.print("Enter number of tickets sold: ");
-				num_sold = in.readLine();
+				num_sold = Integer.valueOf(in.readLine());
 				while (num_sold < 0) {
 					System.out.print("The number of tickets sold should be greater than 0. \nPlease try again.\n");
 					System.out.print("Enter number of tickets sold: ");
-					num_sold = in.readLine();
+					num_sold = Integer.valueOf(in.readLine());
 				}
 
 				// Prompt user for number of stops
 				System.out.print("Enter number of stops: ");
-				num_stops = in.readLine();
+				num_stops = Integer.valueOf(in.readLine());
 				while (num_stops < 0) {
 					System.out.print("The number of stops should 0 or more. \nPlease try again.\n");
 					System.out.print("Enter number of stops: ");
-					num_stops = in.readLine();
+					num_stops = Integer.valueOf(in.readLine());
 				}
 
 				// Prompt user for departure date
@@ -421,7 +421,7 @@ public class DBproject{
 				// Prompt user for departure airport
 				System.out.print("Enter Departure Airport (Five characters or less): ");
 				departure_airport = in.readLine();
-				while (departure_airport.length > 5) {
+				while (departure_airport.length() > 5) {
 					String departure_airport_substring = departure_airport.substring(0, 5);
 
 					System.out.println(departure_airport + " is too long. Press enter to automatically shorten to " + departure_airport_substring  + " or re-enter departure_airport.");
@@ -439,7 +439,7 @@ public class DBproject{
 				System.out.print("Enter Arrival Airport (Five characters or less): ");
 				arrival_airport = in.readLine();
 
-				while (arrival_airport.length > 5) {
+				while (arrival_airport.length() > 5) {
 					String arrival_airport_substring = arrival_airport.substring(0, 5);
 
 					System.out.println(arrival_airport + " is too long. Press enter to automatically shorten to " + arrival_airport_substring  + " or re-enter arrival_airport.");
