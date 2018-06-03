@@ -365,9 +365,6 @@ public class DBproject{
 	public static void AddFlight(DBproject esql) {//3
 		// Given a pilot, plane and flight, adds a flight in the DB
 
-		// Verify Pilot Exists
-		// Verify Plane Exists
-		// Add Flight
 		try{
 
 			int cost = 0, num_sold = 0, num_stops = 0;
@@ -408,12 +405,18 @@ public class DBproject{
 				// Prompt user for departure date
 				System.out.print("Enter Departure Date (YYYY-MM-DD): ");
 				departure_date = in.readLine();
-				// Call parse date
+				while (!validDate(departure_date)){
+					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
+					departure_date = in.readLine();
+				}
 
 				// Prompt user for arrival date
 				System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
 				arrival_date = in.readLine();
-				// Call parse date
+				while (!validDate(arrival_date)){
+					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
+					arrival_date = in.readLine();
+				}
 
 				// Prompt user for departure airport
 				System.out.print("Enter Departure Airport (Five characters or less): ");
@@ -504,6 +507,40 @@ public class DBproject{
 
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
+	}
+
+	// Added Functions
+	boolean validDate(String date) {
+		if (date.length()!=10) return false;
+
+		// Parse date, expected input YYYY-MM-DD
+		String[] parsedDate = date.split("-");
+		int year = Integer.valueOf(parsedDate[0]);
+		int month = Integer.valueOf(parsedDate[1]);
+		int day = Integer.valueOf(parsedDate[2]);
+
+		// validate year
+		if (year < 0) {
+			return false;
+		}
+		// Validate Month
+		if (month < 0 || month >12 ) {
+			return false;
+		}
+		//Validate Day
+		if (day > 31 ) {
+			return false;
+		} else if (month == 4 || month == 6 || month == 9 || month == 11 && day > 30){
+			return false;
+		} else if (month == 2){
+			if (day > 28){
+				return false;
+			} else if (year%4 == 0 && day > 29) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }
