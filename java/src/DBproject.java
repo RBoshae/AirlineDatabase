@@ -491,6 +491,23 @@ public class DBproject{
 
 	public static void BookFlight(DBproject esql) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
+		// Book Flight: Given a customer and flight that he/she wants to book, determine the status of the
+		//							reservation (Waitlisted/Confirmed/Reserved) and add the reservation to the database with appropriate status.
+		try{
+			System.out.println("Please provide the customer id");
+			String customerID=in.readLine();
+
+			esql.executeQuery("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
+
+			System.out.println("Please provide the Flight Number the customer would like to book: ");
+			String user_provided_fnum = in.readLine();
+
+			// Check database for flight number.
+			espql.executeQuery("Select * FROM flight WHERE fnum=" + user_provided_fnum + ";")
+
+		}catch(Exception e){
+
+		}
 	}
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
