@@ -405,7 +405,7 @@ public class DBproject{
 				// Prompt user for departure date
 				System.out.print("Enter Departure Date (YYYY-MM-DD): ");
 				departure_date = in.readLine();
-				while (!validDate(departure_date)){
+				while (!(validDate(departure_date))){
 					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 					departure_date = in.readLine();
 				}
@@ -413,7 +413,7 @@ public class DBproject{
 				// Prompt user for arrival date
 				System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
 				arrival_date = in.readLine();
-				while (!validDate(arrival_date)){
+				while (!(validDate(arrival_date))){
 					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 					arrival_date = in.readLine();
 				}
@@ -510,7 +510,7 @@ public class DBproject{
 	}
 
 	// Added Functions
-	boolean validDate(String date) {
+	public static boolean validDate(String date) {
 		if (date.length()!=10) return false;
 
 		// Parse date, expected input YYYY-MM-DD
