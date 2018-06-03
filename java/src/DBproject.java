@@ -331,7 +331,7 @@ public class DBproject{
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
 				System.out.println("Add plane(y/n)?");
 				String answer = in.readLine();
-			
+
 				if (answer.equals("y") || answer.equals("yes")) {
 					 keepon = false;
 				 }
@@ -364,6 +364,123 @@ public class DBproject{
 
 	public static void AddFlight(DBproject esql) {//3
 		// Given a pilot, plane and flight, adds a flight in the DB
+
+		// Verify Pilot Exists
+		// Verify Plane Exists
+		// Add Flight
+		try{
+
+			int cost = 0, num_sold = 0, num_stops = 0;
+
+			String departure_date = "", arrival_date = "", arrival_airport = "", departure_airport="";
+			//=============//
+			// User Prompt //
+			//=============//
+			boolean keepon = true;
+			while (keepon){
+				// Prompt user for flight cost
+				System.out.print("Enter flight cost (Whole Number Only): ");
+				cost = in.readLine();
+				while (cost < 0) {
+					System.out.print("The flight cost should be greater than 0. \nPlease try again.\n");
+					System.out.println("Enter flight cost (Whole Number Only): ");
+					cost = in.readLine();
+				}
+
+				// Prompt user for number of tickets sold
+				System.out.print("Enter number of tickets sold: ");
+				num_sold = in.readLine();
+				while (num_sold < 0) {
+					System.out.print("The number of tickets sold should be greater than 0. \nPlease try again.\n");
+					System.out.print("Enter number of tickets sold: ");
+					num_sold = in.readLine();
+				}
+
+				// Prompt user for number of stops
+				System.out.print("Enter number of stops: ");
+				num_stops = in.readLine();
+				while (num_stops < 0) {
+					System.out.print("The number of stops should 0 or more. \nPlease try again.\n");
+					System.out.print("Enter number of stops: ");
+					num_stops = in.readLine();
+				}
+
+				// Prompt user for departure date
+				System.out.print("Enter Departure Date (YYYY-MM-DD): ");
+				departure_date = in.readLine();
+				// Call parse date
+
+				// Prompt user for arrival date
+				System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
+				arrival_date = in.readLine();
+				// Call parse date
+
+				// Prompt user for departure airport
+				System.out.print("Enter Departure Airport (Five characters or less): ");
+				departure_airport = in.readLine();
+				while (departure_airport.length > 5) {
+					String departure_airport_substring = departure_airport.substring(0, 5);
+
+					System.out.println(departure_airport + " is too long. Press enter to automatically shorten to " + departure_airport_substring  + " or re-enter departure_airport.");
+
+					System.out.print("Enter Departure Airport (Five characters or less): ");
+					String reentered_departure_airport = in.readLine();
+
+					if (reentered_departure_airport.equals("")) {
+						departure_airport = departure_airport_substring;
+					}
+
+				}
+
+				// Prompt user for arrival airport
+				System.out.print("Enter Arrival Airport (Five characters or less): ");
+				arrival_airport = in.readLine();
+
+				while (arrival_airport.length > 5) {
+					String arrival_airport_substring = arrival_airport.substring(0, 5);
+
+					System.out.println(arrival_airport + " is too long. Press enter to automatically shorten to " + arrival_airport_substring  + " or re-enter arrival_airport.");
+
+					System.out.print("Enter Arrival Airport (Five characters or less): ");
+					String reentered_arrival_airport = in.readLine();
+
+					if (reentered_arrival_airport.equals("")) {
+						arrival_airport = arrival_airport_substring;
+					}
+
+				}
+
+
+				System.out.println("Cost: " + cost + ", Tickets Sold: " + num_sold + ", Departure Date: " + departure_date + ", Arrival Date: " + arrival_date + ", Arrival Airport: " + arrival_airport + ", Departure Airport: " + departure_airport);
+				System.out.println("Add Flight(y/n)?");
+				String answer = in.readLine();
+
+				if (answer.equals("y") || answer.equals("yes")) {
+					 keepon = false;
+				 }
+
+			}
+
+			//===============//
+			// Insert Flight  //
+			//===============//
+
+			// maxIDQuery is the current max primary id value
+			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+
+			maxIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
+
+      String query = "INSERT INTO flight VALUES (" + maxIDQuery
+									 + ", " + cost + ", " +  num_sold + ", "
+									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert statement
+      esql.executeUpdate(query); 								//insert new flight into database
+
+			System.out.println("Flight added to database.");
+
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
