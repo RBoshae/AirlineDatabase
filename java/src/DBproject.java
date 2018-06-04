@@ -334,7 +334,7 @@ public class DBproject{
 
 				if (answer.equals("y") || answer.equals("yes")) {
 					 keepon = false;
-				 }
+				 } else { return;} // REVIEW. Should user continue through the loop or go back to menu. Currently set to return to main menu.
 
 			}
 
@@ -496,8 +496,8 @@ public class DBproject{
 		try{
 			System.out.println("Please provide the customer id");
 			String customerID=in.readLine();
-
-			esql.executeQuery("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
+			// HERE
+			esql.executeQueryAndReturnResult("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
 
 			System.out.println("Please provide the Flight Number the customer would like to book: ");
 			String user_provided_fnum = in.readLine();
