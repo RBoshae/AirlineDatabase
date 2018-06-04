@@ -494,16 +494,42 @@ public class DBproject{
 		// Book Flight: Given a customer and flight that he/she wants to book, determine the status of the
 		//							reservation (Waitlisted/Confirmed/Reserved) and add the reservation to the database with appropriate status.
 		try{
-			System.out.println("Please provide the customer id");
-			String customerID=in.readLine();
-			// HERE
-			esql.executeQueryAndReturnResult("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
+			String reservation_status = ""; // Used for Insert on Reservation table
 
-			System.out.println("Please provide the Flight Number the customer would like to book: ");
-			String user_provided_fnum = in.readLine();
+			// Get customer id
+			System.out.println("Please enter the Customer ID");
+			int customerID=Integer.valueOf(in.readLine());
+			// List<List<String>> query_result = esql.executeQueryAndReturnResult("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
 
-			// Check database for flight number.
-			espql.executeQuery("Select * FROM flight WHERE fnum=" + user_provided_fnum + ";")
+			// Get flight id
+			System.out.println("Please enter the Flight Number to book: ");
+			int user_provided_fnum = Integer.valueOf(in.readLine());
+
+			// Get number of seats sold from flight
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum +";").get(0).get(0));
+			System.out.println("Number of seats sold: " + seats_sold); // Debugging
+
+			//Get number of seats available on the plane.
+			int seats_total = Integer.valueOf(espql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;"));
+			System.out.println("Number of seats on plane: " + seats_sold); // Debugging
+
+			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
+			int seats_available = seats_total - seats_sold;
+			System.out.println("There are " + seats_available + " seats available.");
+
+			if(seats_available > 0) {
+				reservation_status = "R";
+			} else {
+				reservation_status = "W";
+			}
+
+			// Prepare to add reservation to the database with appropriate status
+			// Update number of seats sold in flight table.
+			espql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1"); // HERE
+			// Insert reservation to reservation table
+			espql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + user_provided_fnum + ", " + reservation_status + ";");
+			System.out.println("Customer Added to Flight");
+
 
 		}catch(Exception e){
 
