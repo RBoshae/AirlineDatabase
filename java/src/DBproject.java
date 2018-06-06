@@ -407,7 +407,9 @@ public class DBproject{
 
 	public static void AddTechnician(DBproject esql) {//4
     
-    // my code
+    
+       try{
+          // my code
          
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
          getID++;
@@ -424,6 +426,10 @@ public class DBproject{
          esql.executeUpdate(query);
          
          System.out.println("Technician added to database.");
+         
+       }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
     
 	}
 
