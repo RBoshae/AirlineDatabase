@@ -476,7 +476,7 @@ public class DBproject{
             ////////////////////////////////////////////////////////////////////////
 			// Get number of seats sold from flight
 			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ 
-                                             user_provided_fnum + "AND F.actual_departure_date=\'"+ user_provided_date + "\';").get(0).get(0));
+                                             user_provided_fnum + "AND F.actual_departure_date=\'"+ user_provided_date_time + "\';").get(0).get(0));
 			
             System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
