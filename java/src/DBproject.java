@@ -368,24 +368,21 @@ public class DBproject{
 	try{
 		
          // my code
-		 //String getID = "SELECT MAX(id) FROM Pilot;";
-         //int currID = esql.executeQueryAndReturnResult(getID);
-         
+
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
          getID++;
          
-		 System.out.println("current ID: " + getID);
-		 
-		 //int nextID = currID + 1;
+		 //System.out.println("current ID: " + getID); // debugging output
 		 
          System.out.print("Enter fullname: ");
          String fullname = in.readLine();
          
-         System.out.println("fullname: " + fullname);
+         //System.out.println("fullname: " + fullname); // debugging output
 	
          System.out.print("Enter nationality: ");
          String nationality = in.readLine();
-         System.out.println("nationality: " + nationality);
+         
+         //System.out.println("nationality: " + nationality); // debugging output
 		
          String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
@@ -414,12 +411,12 @@ public class DBproject{
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
          getID++;
          
-		 //System.out.println("current ID: " + getID); // debugging to get ID
+		 //System.out.println("current ID: " + getID); // debugging output
 		 
          System.out.print("Enter fullname: ");
          String fullname = in.readLine();
          
-         // System.out.println("fullname: " + fullname); // debuggin to show name
+         // System.out.println("fullname: " + fullname); // debugging output
 		
          String query = "INSERT INTO Technician VALUES(" + getID + ", \'" + fullname + "\');";
 
@@ -439,6 +436,74 @@ public class DBproject{
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
+        
+        // Given a flight number and a departure date, find the number of available seats in a flight.
+        
+        // Flight(F):
+        //    - fnum
+        //    - cost
+        //    - num_sold *
+        //    - num_stops
+        //    - actual_departure_date *
+        //    - actual_arrival_date
+        //    - arrival_airport
+        //    - dpearture_airport
+        // 
+        // Plane(P):
+        //    - id *
+        //    - make
+        //    - model
+        //    - age
+        //    - seats *
+        //
+        // FlightInfo(FI):
+        //    - fiid
+        //    - flight_id *
+        //    - pilot_id 
+        //    - plane_id *
+        
+        try{
+          // my code
+        
+            // Get flight id
+			System.out.println("Please enter the Flight Number to book: ");
+			int user_provided_fnum = Integer.valueOf(in.readLine());
+            
+            System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): "):
+            int user_provided_date_time = in.readLine();
+
+            
+            ////////////////////////////////////////////////////////////////////////
+			// Get number of seats sold from flight
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ 
+                                             user_provided_fnum + "AND F.actual_departure_date="+ user_provided_date + ";").get(0).get(0));
+			
+            System.out.println("Number of seats sold: " + seats_sold); // Debugging
+
+            
+            ////////////////////////////////////////////////////////////////////////
+			//Get number of seats available on the plane.
+			int seats_total = Integer.valueOf(espql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + 
+                                                                                user_provided_fnum + " AND FI.plane_id=P.id;"));
+			
+            System.out.println("Number of seats on plane: " + seats_sold); // Debugging
+
+            
+            ////////////////////////////////////////////////////////////////////////
+			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
+			int seats_available = seats_total - seats_sold;
+			
+            System.out.println("There are " + seats_available + " seats available.");
+        
+        
+        
+        }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
+        
+        
+        
+        
 	}
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
