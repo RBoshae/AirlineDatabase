@@ -334,7 +334,7 @@ public class DBproject{
 		
          String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
-         esql.executeQuery(query);
+         esql.executeUpdate(query);
          
          System.out.println("Pilot added to database.");
          
