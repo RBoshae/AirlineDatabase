@@ -316,7 +316,7 @@ public class DBproject{
 		 //String getID = "SELECT MAX(id) FROM Pilot;";
          //int currID = esql.executeQueryAndReturnResult(getID);
          
-         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0),get(0));
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
          getID++;
          
 		 System.out.print("current ID: " + getID);
