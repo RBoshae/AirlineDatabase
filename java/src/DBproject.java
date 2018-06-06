@@ -406,6 +406,38 @@ public class DBproject{
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
+    
+    
+    // my code
+		 //String getID = "SELECT MAX(id) FROM Pilot;";
+         //int currID = esql.executeQueryAndReturnResult(getID);
+         
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
+         getID++;
+         
+		 System.out.println("current ID: " + getID);
+		 
+		 //int nextID = currID + 1;
+		 
+         System.out.print("\tEnter fullname: ");
+         String fullname = in.readLine();
+         
+         System.out.println("fullname: " + fullname);
+	
+         //System.out.print("\tEnter nationality: ");
+         //String nationality = in.readLine();
+         //System.out.println("nationality: " + nationality);
+		
+         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\');";
+
+         esql.executeUpdate(query);
+         
+         System.out.println("Technician added to database.");
+    
+    
+    
+    
+    
 	}
 
 	public static void BookFlight(DBproject esql) {//5
