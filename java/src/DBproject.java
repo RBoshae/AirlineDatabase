@@ -299,6 +299,8 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
+    
+    //////////////////////////////////////////////////////////////////////////////////
 	public static void AddPlane(DBproject esql) {//1
 
 
@@ -311,11 +313,15 @@ public class DBproject{
 	try{
 		
          // my code
-		 String getID = "SELECT MAX(id) FROM Pilot;";
-         int currID = esql.executeQueryAndReturnResult(getID);
-		 System.out.print("current ID: " + currID);
+		 //String getID = "SELECT MAX(id) FROM Pilot;";
+         //int currID = esql.executeQueryAndReturnResult(getID);
+         
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0),get(0));
+         getID++;
+         
+		 System.out.print("current ID: " + getID);
 		 
-		 int nextID = currID + 1;
+		 //int nextID = currID + 1;
 		 
          System.out.print("\tEnter fullname: ");
          String fullname = in.readLine();
@@ -323,9 +329,11 @@ public class DBproject{
          System.out.print("\tEnter nationality: ");
          String nationality = in.readLine();
 		
-         String query = "INSERT INTO Pilot(" + nextID + ", \'" + fullname + "\', \'" + nationality + "\');";
+         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
          esql.executeQuery(query);
+         
+         System.out.println("Pilot added to database.");
          
 	}catch(Exception e){
          System.err.println (e.getMessage());
