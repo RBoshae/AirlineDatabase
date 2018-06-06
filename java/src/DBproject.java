@@ -328,7 +328,7 @@ public class DBproject{
 				seats = in.readLine();
 
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
-				System.out.println("Add plane(y/n)?");
+				System.out.println("Confirm Add Plane(y/n)?");
 				String answer = in.readLine();
 
 				if (answer.equals("n") || answer.equals("no")) {
