@@ -466,7 +466,7 @@ public class DBproject{
           // my code
         
             // Get flight id
-			System.out.println("Please enter the Flight Number to book: ");
+			System.out.println("Please enter the Flight Number: ");
 			int user_provided_fnum = Integer.valueOf(in.readLine());
             
             System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
@@ -484,7 +484,7 @@ public class DBproject{
 			//Get number of seats available on the plane.
 			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;").get(0).get(0));
 			
-            System.out.println("Number of seats on plane: " + seats_sold); // Debugging
+            System.out.println("Number of seats on plane: " + seats_total); // Debugging
 
             
             ////////////////////////////////////////////////////////////////////////
