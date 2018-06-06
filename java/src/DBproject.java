@@ -328,12 +328,13 @@ public class DBproject{
 				seats = in.readLine();
 
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
-				System.out.println("Confirm Add Plane(y/n)?");
-				String answer = in.readLine();
 
-				if (answer.equals("n") || answer.equals("no")) {
-					 return; // Do not add plane. Return to menu.
-				 }
+				// System.out.println("Confirm Add Plane(y/n)?");
+				// String answer = in.readLine();
+				//
+				// if (answer.equals("n") || answer.equals("no")) {
+				// 	 return; // Do not add plane. Return to menu.
+				//  }
 
 			//===============//
 			// Insert Plane  //
