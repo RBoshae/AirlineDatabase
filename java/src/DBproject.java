@@ -466,10 +466,10 @@ public class DBproject{
           // my code
         
             // Get flight id
-			System.out.println("Please enter the Flight Number: ");
+			System.out.print("Please enter the Flight Number: ");
 			int user_provided_fnum = Integer.valueOf(in.readLine());
             
-            System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
+            System.out.print("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
             String user_provided_date_time = in.readLine();
 
             
