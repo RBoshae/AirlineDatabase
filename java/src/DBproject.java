@@ -299,6 +299,8 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
+    
+    //////////////////////////////////////////////////////////////////////////////////
 	public static void AddPlane(DBproject esql) {//1
 
 		// To add a plane we need to collect the following information: id, make, model, age, seats.
@@ -360,6 +362,43 @@ public class DBproject{
 	}
 
 	public static void AddPilot(DBproject esql) {//2
+	
+	
+	
+	try{
+		
+         // my code
+		 //String getID = "SELECT MAX(id) FROM Pilot;";
+         //int currID = esql.executeQueryAndReturnResult(getID);
+         
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
+         getID++;
+         
+		 System.out.println("current ID: " + getID);
+		 
+		 //int nextID = currID + 1;
+		 
+         System.out.print("Enter fullname: ");
+         String fullname = in.readLine();
+         
+         System.out.println("fullname: " + fullname);
+	
+         System.out.print("Enter nationality: ");
+         String nationality = in.readLine();
+         System.out.println("nationality: " + nationality);
+		
+         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
+
+         esql.executeUpdate(query);
+         
+         System.out.println("Pilot added to database.");
+         
+	}catch(Exception e){
+         System.err.println (e.getMessage());
+    }
+	
+	
+	
 	}
 
 	public static void AddFlight(DBproject esql) {//3
@@ -487,6 +526,31 @@ public class DBproject{
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
+    
+    
+       try{
+          // my code
+         
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
+         getID++;
+         
+		 //System.out.println("current ID: " + getID); // debugging to get ID
+		 
+         System.out.print("Enter fullname: ");
+         String fullname = in.readLine();
+         
+         // System.out.println("fullname: " + fullname); // debuggin to show name
+		
+         String query = "INSERT INTO Technician VALUES(" + getID + ", \'" + fullname + "\');";
+
+         esql.executeUpdate(query);
+         
+         System.out.println("Technician added to database.");
+         
+       }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
+    
 	}
 
 	public static void BookFlight(DBproject esql) {//5
