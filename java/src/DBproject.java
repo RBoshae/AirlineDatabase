@@ -483,7 +483,7 @@ public class DBproject{
             
             ////////////////////////////////////////////////////////////////////////
 			//Get number of seats available on the plane.
-			int seats_total = Integer.valueOf(espql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + 
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + 
                                                                                 user_provided_fnum + " AND FI.plane_id=P.id;"));
 			
             System.out.println("Number of seats on plane: " + seats_sold); // Debugging
