@@ -312,8 +312,7 @@ public class DBproject{
 			//=============//
 			// User Prompt //
 			//=============//
-			boolean keepon = true;
-			while (keepon){
+
 				// Prompt user for make
 				System.out.print("Enter make: ");
 				make = in.readLine();
@@ -331,14 +330,13 @@ public class DBproject{
 				seats = in.readLine();
 
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
-				System.out.println("Add plane(y/n)?");
-				String answer = in.readLine();
 
-				if (answer.equals("y") || answer.equals("yes")) {
-					 keepon = false;
-				 }
-
-			}
+				// System.out.println("Confirm Add Plane(y/n)?");
+				// String answer = in.readLine();
+				//
+				// if (answer.equals("n") || answer.equals("no")) {
+				// 	 return; // Do not add plane. Return to menu.
+				//  }
 
 			//===============//
 			// Insert Plane  //
@@ -356,14 +354,12 @@ public class DBproject{
 
 			System.out.println("Plane added to database.");
 
-      }catch(Exception e){
-         System.err.println (e.getMessage());
-      }
+    }catch(Exception e){
+       System.err.println (e.getMessage());
+    }
 	}
 
 	public static void AddPilot(DBproject esql) {//2
-	
-	
 	
 	try{
 		
@@ -396,9 +392,7 @@ public class DBproject{
 	}catch(Exception e){
          System.err.println (e.getMessage());
     }
-	
-	
-	
+
 	}
 
 	public static void AddFlight(DBproject esql) {//3
