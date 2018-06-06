@@ -313,24 +313,20 @@ public class DBproject{
 	try{
 		
          // my code
-		 //String getID = "SELECT MAX(id) FROM Pilot;";
-         //int currID = esql.executeQueryAndReturnResult(getID);
          
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
          getID++;
          
-		 System.out.println("current ID: " + getID);
-		 
-		 //int nextID = currID + 1;
+		 //System.out.println("current ID: " + getID); // debugging output
 		 
          System.out.print("\tEnter fullname: ");
          String fullname = in.readLine();
          
-         System.out.println("fullname: " + fullname);
+         //System.out.println("fullname: " + fullname); // debugging output
 	
          System.out.print("\tEnter nationality: ");
          String nationality = in.readLine();
-         System.out.println("nationality: " + nationality);
+         //System.out.println("nationality: " + nationality); // debuggin output
 		
          String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
