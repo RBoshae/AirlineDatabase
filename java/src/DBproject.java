@@ -469,7 +469,7 @@ public class DBproject{
 			System.out.println("Please enter the Flight Number to book: ");
 			int user_provided_fnum = Integer.valueOf(in.readLine());
             
-            System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): "):
+            System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
             int user_provided_date_time = in.readLine();
 
             
