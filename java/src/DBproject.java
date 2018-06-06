@@ -378,12 +378,12 @@ public class DBproject{
 		 
 		 //int nextID = currID + 1;
 		 
-         System.out.print("\tEnter fullname: ");
+         System.out.print("Enter fullname: ");
          String fullname = in.readLine();
          
          System.out.println("fullname: " + fullname);
 	
-         System.out.print("\tEnter nationality: ");
+         System.out.print("Enter nationality: ");
          String nationality = in.readLine();
          System.out.println("nationality: " + nationality);
 		
@@ -414,12 +414,12 @@ public class DBproject{
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
          getID++;
          
-		 System.out.println("current ID: " + getID);
+		 //System.out.println("current ID: " + getID); // debugging to get ID
 		 
-         System.out.print("\tEnter fullname: ");
+         System.out.print("Enter fullname: ");
          String fullname = in.readLine();
          
-         System.out.println("fullname: " + fullname);
+         // System.out.println("fullname: " + fullname); // debuggin to show name
 		
          String query = "INSERT INTO Technician VALUES(" + getID + ", \'" + fullname + "\');";
 
