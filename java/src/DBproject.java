@@ -475,16 +475,14 @@ public class DBproject{
             
             ////////////////////////////////////////////////////////////////////////
 			// Get number of seats sold from flight
-			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ 
-                                             user_provided_fnum + "AND F.actual_departure_date=\'"+ user_provided_date_time + "\';").get(0).get(0));
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum + " AND F.actual_departure_date=\'"+ user_provided_date_time + "\';").get(0).get(0));
 			
             System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
             
             ////////////////////////////////////////////////////////////////////////
 			//Get number of seats available on the plane.
-			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + 
-                                                                                user_provided_fnum + " AND FI.plane_id=P.id;"));
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;"));
 			
             System.out.println("Number of seats on plane: " + seats_sold); // Debugging
 
