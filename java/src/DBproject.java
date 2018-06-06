@@ -470,13 +470,13 @@ public class DBproject{
 			int user_provided_fnum = Integer.valueOf(in.readLine());
             
             System.out.println("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
-            int user_provided_date_time = in.readLine();
+            String user_provided_date_time = in.readLine();
 
             
             ////////////////////////////////////////////////////////////////////////
 			// Get number of seats sold from flight
 			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ 
-                                             user_provided_fnum + "AND F.actual_departure_date="+ user_provided_date + ";").get(0).get(0));
+                                             user_provided_fnum + "AND F.actual_departure_date=\'"+ user_provided_date + "\';").get(0).get(0));
 			
             System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
