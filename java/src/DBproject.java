@@ -647,6 +647,7 @@ public class DBproject{
 				System.out.print("Enter Customer ID: ");
 				String userInput = in.readLine();
 				if (userInput.equals("q")) {
+					System.out.println("Returning To Menu");
 					return;
 				}
 				customerID = Integer.valueOf(userInput);
@@ -665,6 +666,7 @@ public class DBproject{
 				System.out.print("Enter Flight Number: ");
 				String userInput = in.readLine();
 				if (userInput.equals("q")) {
+					System.out.println("Returning To Menu");
 					return;
 				}
 				flightNumber = Integer.valueOf(userInput);
@@ -704,7 +706,7 @@ public class DBproject{
 
 
 		}catch(Exception e){
-
+			System.err.println (e.getMessage());
 		}
 	}
 
