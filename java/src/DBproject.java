@@ -629,7 +629,7 @@ public class DBproject{
           
           String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id;";
 
-          esql.executeUpdate(query);
+          esql.executeQueryAndPrintResult(query);
          
           System.out.println("List Total Number of Repairs completed.");
           
