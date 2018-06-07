@@ -695,8 +695,11 @@ public class DBproject{
 
 			// Generate rnum
 			int rnum = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(rnum) FROM Reservation;").get(0).get(0)) + 1;
+
+			String insertReservationStatement="INSERT INTO Reservation VALUES (" + rnum + ", " + customerID + ", " + flightNumber + ", " + reservation_status + ");";
+			System.out.println(insertReservationStatement);
 			// Insert reservation to reservation table
-			esql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + flightNumber + ", " + reservation_status + ";");
+			esql.executeUpdate(insertReservationStatement);
 			System.out.println("Customer Added to Flight");
 
 
