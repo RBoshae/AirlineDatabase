@@ -6,7 +6,7 @@ Specifically we implement the following functionality using the given schema:
 - [x] Add Pilot: Ask the user for details of a pilot and add it to the DB
 - [x] Add Flight: Ask the user for details of a flight and add it to the DB
 - [x] Add Technician: Ask user for details of a technician and add it to the DB
-- [ ] Book Flight: Given a customer and flight that he/she wants to book, determine the status of the reservation (Waitlisted/Confirmed/Reserved) and add the reservation to the database with appropriate status.
+- [x] Book Flight: Given a customer and flight that he/she wants to book, determine the status of the reservation (Waitlisted/Confirmed/Reserved) and add the reservation to the database with appropriate status.
 - [x] List number of available seats for a given flight: Given a flight number and a departure date, find the number of available seats in the flight.
 - [x] List total number of repairs per plane in descending order: Return the list of planes in decreasing order of number of repairs that have been made on the planes.
 - [ ] List total number of repairs per year in ascending order:  Return the years with the number of repairs made in those years in ascending order of number of repairs per year.
