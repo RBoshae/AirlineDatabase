@@ -662,7 +662,7 @@ public class DBproject{
 			int flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
 
 			while (flightExists < 1) {
-				System.out.println("Flight Numberdoes not exist. Please try again or enter q to return to menu.");
+				System.out.println("Flight Number does not exist. Please try again or enter q to return to menu.");
 				System.out.print("Enter Flight Number: ");
 				String userInput = in.readLine();
 				if (userInput.equals("q")) {
@@ -674,7 +674,7 @@ public class DBproject{
 			}
 
 			// Get number of seats sold from flight
-			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ flightNumber +");").get(0).get(0));
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ flightNumber +";").get(0).get(0));
 			System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
 			//Get number of seats available on the plane.
