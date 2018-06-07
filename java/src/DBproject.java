@@ -620,6 +620,26 @@ public class DBproject{
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
 		// Count number of repairs per planes and list them in descending order
+        
+        // List total number of repairs per plane in descending order
+        // Return the list of planes in descreasing order of number of repairs that have been made on the planes
+        
+        try{
+          // my code
+          
+          String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id;";
+
+          esql.executeUpdate(query);
+         
+          System.out.println("List Total Number of Repairs completed.");
+          
+          
+          
+          
+        }catch(Exception e){
+         System.err.println (e.getMessage());
+       }  
+        
 	}
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
