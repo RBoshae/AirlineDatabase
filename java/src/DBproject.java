@@ -659,7 +659,7 @@ public class DBproject{
 			int flightNumber = Integer.valueOf(in.readLine());
 
 			// Check is flightNumber is valid
-			int flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+			int flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
 
 			while (flightExists < 1) {
 				System.out.println("Flight Numberdoes not exist. Please try again or enter q to return to menu.");
