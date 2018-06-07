@@ -299,7 +299,7 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
-    
+
     //////////////////////////////////////////////////////////////////////////////////
 	public static void AddPlane(DBproject esql) {//1
 
@@ -360,32 +360,32 @@ public class DBproject{
 	}
 
 	public static void AddPilot(DBproject esql) {//2
-	
+
 	try{
-		
+
          // my code
 
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
          getID++;
-         
+
 		 //System.out.println("current ID: " + getID); // debugging output
-		 
+
          System.out.print("Enter fullname: ");
          String fullname = in.readLine();
-         
+
          //System.out.println("fullname: " + fullname); // debugging output
-	
+
          System.out.print("Enter nationality: ");
          String nationality = in.readLine();
-         
+
          //System.out.println("nationality: " + nationality); // debugging output
-		
+
          String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
          esql.executeUpdate(query);
-         
+
          System.out.println("Pilot added to database.");
-         
+
 	}catch(Exception e){
          System.err.println (e.getMessage());
     }
@@ -399,149 +399,233 @@ public class DBproject{
 
 			int cost = 0, num_sold = 0, num_stops = 0;
 
-			String departure_date = "", arrival_date = "", arrival_airport = "", departure_airport="";
+			String departure_date = "", arrival_date = "", arrival_airport = "", departure_airport="", departure_time="", arrival_time="";
+
+			int pilotID = -1, planeID = -1;
+
 			//=============//
 			// User Prompt //
 			//=============//
-			boolean keepon = true;
-			while (keepon){
-				// Prompt user for flight cost
-				System.out.print("Enter flight cost (Whole Number Only): ");
-				cost = Integer.valueOf(in.readLine());
-				while (cost < 0) {
-					System.out.print("The flight cost should be greater than 0. \nPlease try again.\n");
-					System.out.println("Enter flight cost (Whole Number Only): ");
-					cost = Integer.valueOf(in.readLine());
-				}
 
-				// Prompt user for number of tickets sold
+			// Prompt user for flight cost
+			System.out.print("Enter flight cost (Whole Number Only): ");
+			cost = Integer.valueOf(in.readLine());
+			while (cost < 0) {
+				System.out.print("The flight cost should be greater than 0. \nPlease try again.\n");
+				System.out.println("Enter flight cost (Whole Number Only): ");
+				cost = Integer.valueOf(in.readLine());
+			}
+
+			// Prompt user for number of tickets sold
+			System.out.print("Enter number of tickets sold: ");
+			num_sold = Integer.valueOf(in.readLine());
+			while (num_sold < 0) {
+				System.out.print("The number of tickets sold should be greater than 0. \nPlease try again.\n");
 				System.out.print("Enter number of tickets sold: ");
 				num_sold = Integer.valueOf(in.readLine());
-				while (num_sold < 0) {
-					System.out.print("The number of tickets sold should be greater than 0. \nPlease try again.\n");
-					System.out.print("Enter number of tickets sold: ");
-					num_sold = Integer.valueOf(in.readLine());
-				}
+			}
 
-				// Prompt user for number of stops
+			// Prompt user for number of stops
+			System.out.print("Enter number of stops: ");
+			num_stops = Integer.valueOf(in.readLine());
+			while (num_stops < 0) {
+				System.out.print("The number of stops should 0 or more. \nPlease try again.\n");
 				System.out.print("Enter number of stops: ");
 				num_stops = Integer.valueOf(in.readLine());
-				while (num_stops < 0) {
-					System.out.print("The number of stops should 0 or more. \nPlease try again.\n");
-					System.out.print("Enter number of stops: ");
-					num_stops = Integer.valueOf(in.readLine());
-				}
+			}
 
-				// Prompt user for departure date
-				System.out.print("Enter Departure Date (YYYY-MM-DD): ");
+			// Prompt user for departure date
+			System.out.print("Enter Departure Date (YYYY-MM-DD): ");
+			departure_date = in.readLine();
+			while (!(validDate(departure_date))){
+				System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 				departure_date = in.readLine();
-				while (!(validDate(departure_date))){
-					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
-					departure_date = in.readLine();
-				}
+			}
 
-				// Prompt user for arrival date
-				System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
+			// Prompt user for departure time
+			System.out.print("Enter Departure Time (HH:MM): ");
+			departure_time = in.readLine();
+
+
+			// Prompt user for arrival date
+			System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
+			arrival_date = in.readLine();
+			while (!(validDate(arrival_date))){
+				System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 				arrival_date = in.readLine();
-				while (!(validDate(arrival_date))){
-					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
-					arrival_date = in.readLine();
-				}
+			}
 
-				// Prompt user for departure airport
+			// Prompt user for arrival time
+			System.out.print("Enter Arrival Time (HH:MM): ");
+			arrival_time = in.readLine();
+
+
+			// Prompt user for departure airport
+			System.out.print("Enter Departure Airport (Five characters or less): ");
+			departure_airport = in.readLine();
+			while (departure_airport.length() > 5) {
+				String departure_airport_substring = departure_airport.substring(0, 5);
+
+				System.out.println(departure_airport + " is too long. Press enter to automatically shorten to " + departure_airport_substring  + " or re-enter departure_airport.");
+
 				System.out.print("Enter Departure Airport (Five characters or less): ");
-				departure_airport = in.readLine();
-				while (departure_airport.length() > 5) {
-					String departure_airport_substring = departure_airport.substring(0, 5);
+				String reentered_departure_airport = in.readLine();
 
-					System.out.println(departure_airport + " is too long. Press enter to automatically shorten to " + departure_airport_substring  + " or re-enter departure_airport.");
-
-					System.out.print("Enter Departure Airport (Five characters or less): ");
-					String reentered_departure_airport = in.readLine();
-
-					if (reentered_departure_airport.equals("")) {
-						departure_airport = departure_airport_substring;
-					}
-
+				if (reentered_departure_airport.equals("")) {
+					departure_airport = departure_airport_substring;
+				} else {
+					departure_airport = reentered_departure_airport;
 				}
-
-				// Prompt user for arrival airport
-				System.out.print("Enter Arrival Airport (Five characters or less): ");
-				arrival_airport = in.readLine();
-
-				while (arrival_airport.length() > 5) {
-					String arrival_airport_substring = arrival_airport.substring(0, 5);
-
-					System.out.println(arrival_airport + " is too long. Press enter to automatically shorten to " + arrival_airport_substring  + " or re-enter arrival_airport.");
-
-					System.out.print("Enter Arrival Airport (Five characters or less): ");
-					String reentered_arrival_airport = in.readLine();
-
-					if (reentered_arrival_airport.equals("")) {
-						arrival_airport = arrival_airport_substring;
-					}
-
-				}
-
-
-				System.out.println("Cost: " + cost + ", Tickets Sold: " + num_sold + ", Departure Date: " + departure_date + ", Arrival Date: " + arrival_date + ", Arrival Airport: " + arrival_airport + ", Departure Airport: " + departure_airport);
-				System.out.println("Add Flight(y/n)?");
-				String answer = in.readLine();
-
-				if (answer.equals("y") || answer.equals("yes")) {
-					 keepon = false;
-				 }
 
 			}
 
+			// Prompt user for arrival airport
+			System.out.print("Enter Arrival Airport (Five characters or less): ");
+			arrival_airport = in.readLine();
+
+			while (arrival_airport.length() > 5) {
+				String arrival_airport_substring = arrival_airport.substring(0, 5);
+
+				System.out.println(arrival_airport + " is too long. Press enter to automatically shorten to " + arrival_airport_substring  + " or re-enter arrival_airport.");
+
+				System.out.print("Enter Arrival Airport (Five characters or less): ");
+				String reentered_arrival_airport = in.readLine();
+
+				if (reentered_arrival_airport.equals("")) {
+					arrival_airport = arrival_airport_substring;
+				} else {
+					arrival_airport=reentered_arrival_airport;
+				}
+
+			}
+
+			// Prompt user for pilot_id HERE
+			System.out.print("Enter Pilot ID: ");
+			pilotID = Integer.valueOf(in.readLine());
+
+			// Check is pilot_id is valid
+			int pilotExists = esql.executeQuery("SELECT * FROM Pilot Where id="+pilotID+";");
+
+			while (pilotExists < 1) {
+				System.out.println("Invalid Pilot ID. Please try again or enter q to return to menu.");
+				System.out.print("Enter Pilot ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				pilotID = Integer.valueOf(userInput);
+				pilotExists = esql.executeQuery("SELECT * FROM Pilot Where id="+pilotID+";");
+			}
+
+
+			// Prompt user for plane_id
+			System.out.print("Enter Plane ID: ");
+			planeID = Integer.valueOf(in.readLine());
+
+			// Check is plane_id is valid
+			int planeExists = esql.executeQuery("SELECT * FROM Plane Where id="+planeID+";");
+
+			while (planeExists < 1) {
+				System.out.println("Invalid Plane ID. Please try again or enter q to return to menu.");
+				System.out.print("Enter Plane ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				planeID = Integer.valueOf(userInput);
+				planeExists = esql.executeQuery("SELECT * FROM Plane Where id="+planeID+";");
+			}
+
+
+
+
+
+
+			// System.out.println("Cost: " + cost + ", Tickets Sold: " + num_sold + ", Departure Date: " + departure_date + ", Arrival Date: " + arrival_date + ", Arrival Airport: " + arrival_airport + ", Departure Airport: " + departure_airport);
+
+			// System.out.println("Add Flight(y/n)?");
+			// String answer = in.readLine();
+			//
+			// if (answer.equals("n") || answer.equals("no")) {
+			// 	 return;
+			//  }
+
+
+
 			//===============//
-			// Insert Flight  //
+			// Insert Flight //
 			//===============//
 
-			// maxIDQuery is the current max primary id value
-			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+			// maxIDQuery is the current max primary id value in the flight table plus 1
+			int flightID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
 
-			maxIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
-
-      String query = "INSERT INTO flight VALUES (" + maxIDQuery
+      String insertFlightStatement = "INSERT INTO flight VALUES (" + flightID
 									 + ", " + cost + ", " +  num_sold + ", "
-									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert statement
-      esql.executeUpdate(query); 								//insert new flight into database
+									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert flight statement
+
+      esql.executeUpdate(insertFlightStatement); 								//insert new flight into database
 
 			System.out.println("Flight added to database.");
 
-      }catch(Exception e){
-         System.err.println (e.getMessage());
-      }
+			//===================//
+			// Insert FlightInfo //
+			//===================//
+			// Parameters for FlightInfo(fiid, flight_id, pilot_id, plane_id, technician_id)
+
+			// flightInfoID is the current max primary id value in the flight table plus 1.
+			int flightInfoID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) +1;
+
+			// Prepare FlightInfo insert statement.
+			String insertFlightInfoStatement = "INSERT INTO FlightInfo VALUES (" + flightInfoID + ", " +flightID+", "+pilotID+", "+planeID+");";
+
+			esql.executeUpdate(insertFlightInfoStatement);
+			System.out.println("FlightInfo added to database.");
+
+			//===================//
+			// Insert Schedule   //
+			//===================//
+			// Parameters for Schedule(id, flightNum, departure_time, arrival_time)
+
+			// scheduleID is the result of adding one to max primary id value in the schedule table
+			int scheduleID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
+
+			String insertScheduleStatement = "INSERT INTO Schedule VALUES ("+scheduleID+", "+flightID+", \'"+departure_date+" "+departure_time+"\', \'"+arrival_date+" "+arrival_time+"\');";
+			// System.out.println(insertScheduleStatement); // Debugging
+			esql.executeUpdate(insertScheduleStatement);
+			System.out.println("Schedule added to database.");
+
+    }catch(Exception e){
+    	System.err.println (e.getMessage());
+    }
 
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
-    
-    
+
+
        try{
           // my code
-         
+
          int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
          getID++;
-         
+
 		 //System.out.println("current ID: " + getID); // debugging output
-		 
+
          System.out.print("Enter fullname: ");
          String fullname = in.readLine();
-         
+
          // System.out.println("fullname: " + fullname); // debugging output
-		
+
          String query = "INSERT INTO Technician VALUES(" + getID + ", \'" + fullname + "\');";
 
          esql.executeUpdate(query);
-         
+
          System.out.println("Technician added to database.");
-         
+
        }catch(Exception e){
          System.err.println (e.getMessage());
        }
-    
+
 	}
 
 	public static void BookFlight(DBproject esql) {//5
@@ -550,9 +634,9 @@ public class DBproject{
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
-        
+
         // Given a flight number and a departure date, find the number of available seats in a flight.
-        
+
         // Flight(F):
         //    - fnum
         //    - cost
@@ -562,7 +646,7 @@ public class DBproject{
         //    - actual_arrival_date
         //    - arrival_airport
         //    - dpearture_airport
-        // 
+        //
         // Plane(P):
         //    - id *
         //    - make
@@ -573,49 +657,49 @@ public class DBproject{
         // FlightInfo(FI):
         //    - fiid
         //    - flight_id *
-        //    - pilot_id 
+        //    - pilot_id
         //    - plane_id *
-        
+
         try{
           // my code
-        
+
             // Get flight id
 			System.out.print("Please enter the Flight Number: ");
 			int user_provided_fnum = Integer.valueOf(in.readLine());
-            
+
             System.out.print("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
             String user_provided_date_time = in.readLine();
 
-            
+
             ////////////////////////////////////////////////////////////////////////
 			// Get number of seats sold from flight
 			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum + " AND F.actual_departure_date=\'"+ user_provided_date_time + "\';").get(0).get(0));
-			
+
             System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
-            
+
             ////////////////////////////////////////////////////////////////////////
 			//Get number of seats available on the plane.
 			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;").get(0).get(0));
-			
+
             System.out.println("Number of seats on plane: " + seats_total); // Debugging
 
-            
+
             ////////////////////////////////////////////////////////////////////////
 			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
 			int seats_available = seats_total - seats_sold;
-			
+
             System.out.println("There are " + seats_available + " seats available.");
-        
-        
-        
+
+
+
         }catch(Exception e){
          System.err.println (e.getMessage());
        }
-        
-        
-        
-        
+
+
+
+
 	}
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
