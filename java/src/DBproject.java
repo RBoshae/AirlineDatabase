@@ -592,7 +592,7 @@ public class DBproject{
 			// scheduleID is the result of adding one to max primary id value in the schedule table
 			int scheduleID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
 
-			String insertScheduleStatement = "INSERT INTO Schedule VALUES ("+scheduleID+", "+flightID+", "+departure_time+", "+arrival_time+");";
+			String insertScheduleStatement = "INSERT INTO Schedule VALUES ("+scheduleID+", "+flightID+", \'"+departure_time+"\', \'"+arrival_time+"\');";
 			esql.executeUpdate(insertScheduleStatement);
 			System.out.println("Schedule added to database.");
 
