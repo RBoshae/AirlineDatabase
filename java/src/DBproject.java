@@ -754,6 +754,36 @@ public class DBproject{
 
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
+        
+        // Find the total number of passengers with a given status
+        // For a given flight and passenger status, return the number of passengers with the given status
+        
+        
+        try{
+          // my code
+
+            // Get flight id
+			System.out.print("Please enter the Flight Number: ");
+			int user_provided_fnum = Integer.valueOf(in.readLine());
+
+            System.out.print("Please enter your status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
+            String user_provided_status = in.readLine();
+
+            String query = "SELECT COUNT(*) FROM reservation R WHERE R.fid=" + user_provided_fnum + " AND R.status=\'" + user_provided_status + "\';";
+
+            esql.executeQueryAndPrintResult(query);
+
+            System.out.println("List Total Passengers with Status completed.");
+
+
+
+        }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
+        
+        
+        
+        
 	}
 
 	// Added Functions
