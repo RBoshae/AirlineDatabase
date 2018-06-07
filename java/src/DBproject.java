@@ -766,7 +766,7 @@ public class DBproject{
 			System.out.print("Please enter the Flight Number: ");
 			int user_provided_fnum = Integer.valueOf(in.readLine());
 
-            System.out.print("Please enter a status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
+            System.out.print("Please enter your status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
             String user_provided_status = in.readLine();
 
             String query = "SELECT COUNT(*) FROM reservation R WHERE R.fid=" + user_provided_fnum + ", AND R.status=\'" + user_provided_status + "\';";
