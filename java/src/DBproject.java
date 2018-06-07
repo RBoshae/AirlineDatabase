@@ -593,7 +593,7 @@ public class DBproject{
 			int scheduleID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
 
 			String insertScheduleStatement = "INSERT INTO Schedule VALUES ("+scheduleID+", "+flightID+", \'"+departure_date+" "+departure_time+"\', \'"+arrival_date+" "+arrival_time+"\');";
-			System.out.println(insertScheduleStatement); // Debugging
+			// System.out.println(insertScheduleStatement); // Debugging
 			esql.executeUpdate(insertScheduleStatement);
 			System.out.println("Schedule added to database.");
 
