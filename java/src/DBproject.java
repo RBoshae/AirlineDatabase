@@ -402,7 +402,10 @@ public class DBproject{
 
 			int cost = 0, num_sold = 0, num_stops = 0;
 
-			String departure_date = "", arrival_date = "", arrival_airport = "", departure_airport="";
+			String departure_date = "", arrival_date = "", arrival_airport = "", departure_airport="", departure_time="", arrival_time="";
+
+			int pilotID = -1, planeID = -1;
+
 			//=============//
 			// User Prompt //
 			//=============//
@@ -442,6 +445,11 @@ public class DBproject{
 				departure_date = in.readLine();
 			}
 
+			// Prompt user for departure time
+			System.out.print("Enter Departure Date (HH:MM): ");
+			departure_time = in.readLine();
+
+
 			// Prompt user for arrival date
 			System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
 			arrival_date = in.readLine();
@@ -449,6 +457,11 @@ public class DBproject{
 				System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 				arrival_date = in.readLine();
 			}
+
+			// Prompt user for arrival time
+			System.out.print("Enter Arrival Time (HH:MM): ");
+			arrival_time = in.readLine();
+
 
 			// Prompt user for departure airport
 			System.out.print("Enter Departure Airport (Five characters or less): ");
@@ -485,6 +498,47 @@ public class DBproject{
 
 			}
 
+			// Prompt user for pilot_id HERE
+			System.out.print("Enter Pilot ID: ");
+			pilotID = Integer.ValueOf(in.readLine());
+
+			// Check is pilot_id is valid
+			int pilotExists = esql.executeQuery("SELECT * FROM Pilot Where id="+pilotID+";");
+
+			while (pilotExists < 1) {
+				System.Out.println("Invalid Pilot ID. Please try again or enter q to return to menu.")
+				System.out.print("Enter Pilot ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				pilotID = Integer.ValueOf(userInput);
+				int pilotExists = esql.executeQuery("SELECT * FROM Pilot Where id="+pilotID+";");
+			}
+
+
+			// Prompt user for plane_id
+			System.out.print("Enter Plane ID: ");
+			planeID = Integer.ValueOf(in.readLine());
+
+			// Check is plane_id is valid
+			int pilotExists = esql.executeQuery("SELECT * FROM Plane Where id="+planeID+";");
+
+			while (pilotExists < 1) {
+				System.Out.println("Invalid Plane ID. Please try again or enter q to return to menu.")
+				System.out.print("Enter Plane ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				planeID = Integer.ValueOf(userInput);
+				int planeExists = esql.executeQuery("SELECT * FROM Plane Where id="+planeID+";");
+			}
+
+
+
+			}
+
 
 			// System.out.println("Cost: " + cost + ", Tickets Sold: " + num_sold + ", Departure Date: " + departure_date + ", Arrival Date: " + arrival_date + ", Arrival Airport: " + arrival_airport + ", Departure Airport: " + departure_airport);
 
@@ -501,25 +555,33 @@ public class DBproject{
 			// Insert Flight //
 			//===============//
 
-			// maxIDQuery is the current max primary id value
-			int maxIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+			// maxIDQuery is the current max primary id value in the flight table
+			int maxFlightIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
 
-			maxIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
+			maxFlightIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
 
-      String query = "INSERT INTO flight VALUES (" + maxIDQuery
+      String insertFlightStatement = "INSERT INTO flight VALUES (" + maxFlightIDQuery
 									 + ", " + cost + ", " +  num_sold + ", "
-									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert statement
-      esql.executeUpdate(query); 								//insert new flight into database
+									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert flight statement
+
+      esql.executeUpdate(insertFlightStatement); 								//insert new flight into database
 
 			System.out.println("Flight added to database.");
 
 			//===================//
 			// Insert FlightInfo //
 			//===================//
+			// maxIDQuery is the current max primary id value in the flight table
+			int maxFlightInfoIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
 
+			maxFlightInfoIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
+
+			String insertFlightInfoStatement = "INSERT INTO FlightInfo Values (" + maxFlightIDQuery + ", "
+			System.out.println("FlightInfo added to database.");
 			//===================//
 			// Insert Schedule   //
 			//===================//
+			System.out.println("Schedule added to database.");
 
       }catch(Exception e){
          System.err.println (e.getMessage());
