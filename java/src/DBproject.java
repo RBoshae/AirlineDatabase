@@ -672,12 +672,12 @@ public class DBproject{
 			}
 
 			// Get number of seats sold from flight
-			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum +";").get(0).get(0));
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ flightNumber +");").get(0).get(0));
 			System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
 			//Get number of seats available on the plane.
-			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;").get(0).get(0));
-			System.out.println("Number of seats on plane: " + seats_sold); // Debugging
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + flightNumber + " AND FI.plane_id=P.id;").get(0).get(0));
+			System.out.println("Number of seats on plane: " + seats_total); // Debugging
 
 			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
 			int seats_available = seats_total - seats_sold;
@@ -691,12 +691,12 @@ public class DBproject{
 
 			// Prepare to add reservation to the database with appropriate status
 			// Update number of seats sold in flight table.
-			espql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1");
+			esql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1");
 
 			// Generate rnum
 			int rnum = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(rnum) FROM Reservation;").get(0).get(0)) + 1;
 			// Insert reservation to reservation table
-			espql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + flightNumber + ", " + reservation_status + ";");
+			esql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + flightNumber + ", " + reservation_status + ";");
 			System.out.println("Customer Added to Flight");
 
 
