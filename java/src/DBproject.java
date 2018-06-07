@@ -644,6 +644,28 @@ public class DBproject{
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
 		// Count repairs per year and list them in ascending order
+        
+        // List total number of repairs per year in ascending order
+        // Return the years with the number of repairs made in those years in ascending order of number of repairs per year
+        
+        
+        try{
+          // my code
+          
+          String query = "SELECT date_part('year', repair_date), COUNT(*) FROM repairs GROUP BY date_part('year', repair_date) ORDER BY count ASC;";
+
+          esql.executeQueryAndPrintResult(query);
+         
+          System.out.println("List Total Number of Repairs completed.");
+          
+          
+          
+          
+        }catch(Exception e){
+         System.err.println (e.getMessage());
+       }  
+        
+        
 	}
 
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
