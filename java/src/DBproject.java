@@ -560,11 +560,9 @@ public class DBproject{
 			//===============//
 
 			// maxIDQuery is the current max primary id value in the flight table
-			int maxFlightIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+			int flightID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
 
-			maxFlightIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
-
-      String insertFlightStatement = "INSERT INTO flight VALUES (" + maxFlightIDQuery
+      String insertFlightStatement = "INSERT INTO flight VALUES (" + flightID
 									 + ", " + cost + ", " +  num_sold + ", "
 									 + num_stops + ", \'" + departure_date + "\', \'" + arrival_date + "\', \'" + arrival_airport + "\', \'" + departure_airport + "\');";	// prepare insert flight statement
 
@@ -575,16 +573,26 @@ public class DBproject{
 			//===================//
 			// Insert FlightInfo //
 			//===================//
-			// maxIDQuery is the current max primary id value in the flight table
-			int maxFlightInfoIDQuery = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+			// Parameters for FlightInfo(fiid, flight_id, pilot_id, plane_id, technician_id)
 
-			maxFlightInfoIDQuery++;	// increment maxIDQuery to get next primary key for new plane.
+			// flightInfoID is the current max primary id value in the flight table plus 1.
+			int flightInfoID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) +1;
 
-			String insertFlightInfoStatement = "INSERT INTO FlightInfo Values (" + maxFlightInfoIDQuery + ", " +maxFlightIDQuery+", "+pilotID+", "+planeID+");";
+			// Prepare FlightInfo insert statement.
+			String insertFlightInfoStatement = "INSERT INTO FlightInfo Values (" + flightInfoID + ", " +flightID+", "+pilotID+", "+planeID+");";
+
+			esql.executeUpdate(insertFlightInfoStatement);
 			System.out.println("FlightInfo added to database.");
+
 			//===================//
 			// Insert Schedule   //
 			//===================//
+			// Parameters for Schedule(id, flightNum, departure_time, arrival_time)
+
+			// scheduleID is the result of adding one to max primary id value in the schedule table
+			int scheduleID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
+
+			String insertScheduleStatement = "INSERT INTO Schedule Value("+scheduleID+", "+flightID+", "+departure_time+", "+arrival_time+");";
 			System.out.println("Schedule added to database.");
 
     }catch(Exception e){
