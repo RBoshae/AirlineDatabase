@@ -476,6 +476,8 @@ public class DBproject{
 
 				if (reentered_departure_airport.equals("")) {
 					departure_airport = departure_airport_substring;
+				} else {
+					departure_airport = reentered_departure_airport;
 				}
 
 			}
@@ -494,6 +496,8 @@ public class DBproject{
 
 				if (reentered_arrival_airport.equals("")) {
 					arrival_airport = arrival_airport_substring;
+				} else {
+					arrival_airport=reentered_arrival_airport;
 				}
 
 			}
@@ -524,7 +528,7 @@ public class DBproject{
 			// Check is plane_id is valid
 			int planeExists = esql.executeQuery("SELECT * FROM Plane Where id="+planeID+";");
 
-			while (pilotExists < 1) {
+			while (planeExists < 1) {
 				System.out.println("Invalid Plane ID. Please try again or enter q to return to menu.");
 				System.out.print("Enter Plane ID: ");
 				String userInput = in.readLine();
