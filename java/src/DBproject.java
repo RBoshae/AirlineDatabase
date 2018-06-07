@@ -299,6 +299,8 @@ public class DBproject{
 		return input;
 	}//end readChoice
 
+
+    //////////////////////////////////////////////////////////////////////////////////
 	public static void AddPlane(DBproject esql) {//1
 
 		// To add a plane we need to collect the following information: id, make, model, age, seats.
@@ -310,8 +312,7 @@ public class DBproject{
 			//=============//
 			// User Prompt //
 			//=============//
-			boolean keepon = true;
-			while (keepon){
+
 				// Prompt user for make
 				System.out.print("Enter make: ");
 				make = in.readLine();
@@ -329,14 +330,13 @@ public class DBproject{
 				seats = in.readLine();
 
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
-				System.out.println("Add plane(y/n)?");
-				String answer = in.readLine();
 
-				if (answer.equals("y") || answer.equals("yes")) {
-					 keepon = false;
-				 } else { return;} // REVIEW. Should user continue through the loop or go back to menu. Currently set to return to main menu.
-
-			}
+				// System.out.println("Confirm Add Plane(y/n)?");
+				// String answer = in.readLine();
+				//
+				// if (answer.equals("n") || answer.equals("no")) {
+				// 	 return; // Do not add plane. Return to menu.
+				//  }
 
 			//===============//
 			// Insert Plane  //
@@ -354,12 +354,42 @@ public class DBproject{
 
 			System.out.println("Plane added to database.");
 
-      }catch(Exception e){
-         System.err.println (e.getMessage());
-      }
+    }catch(Exception e){
+       System.err.println (e.getMessage());
+    }
 	}
 
 	public static void AddPilot(DBproject esql) {//2
+
+	try{
+
+         // my code
+
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
+         getID++;
+
+		 //System.out.println("current ID: " + getID); // debugging output
+
+         System.out.print("Enter fullname: ");
+         String fullname = in.readLine();
+
+         //System.out.println("fullname: " + fullname); // debugging output
+
+         System.out.print("Enter nationality: ");
+         String nationality = in.readLine();
+
+         //System.out.println("nationality: " + nationality); // debugging output
+
+         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
+
+         esql.executeUpdate(query);
+
+         System.out.println("Pilot added to database.");
+
+	}catch(Exception e){
+         System.err.println (e.getMessage());
+    }
+
 	}
 
 	public static void AddFlight(DBproject esql) {//3
@@ -405,7 +435,7 @@ public class DBproject{
 				// Prompt user for departure date
 				System.out.print("Enter Departure Date (YYYY-MM-DD): ");
 				departure_date = in.readLine();
-				while (!validDate(departure_date)){
+				while (!(validDate(departure_date))){
 					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 					departure_date = in.readLine();
 				}
@@ -413,7 +443,7 @@ public class DBproject{
 				// Prompt user for arrival date
 				System.out.print("Enter Arrival Date (YYYY-MM-DD): ");
 				arrival_date = in.readLine();
-				while (!validDate(arrival_date)){
+				while (!(validDate(arrival_date))){
 					System.out.print("Invalid Date. Please Re-Enter Departure Date (YYYY-MM-DD): ");
 					arrival_date = in.readLine();
 				}
@@ -487,6 +517,31 @@ public class DBproject{
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
+
+
+       try{
+          // my code
+
+         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Technician;").get(0).get(0));
+         getID++;
+
+		 //System.out.println("current ID: " + getID); // debugging output
+
+         System.out.print("Enter fullname: ");
+         String fullname = in.readLine();
+
+         // System.out.println("fullname: " + fullname); // debugging output
+
+         String query = "INSERT INTO Technician VALUES(" + getID + ", \'" + fullname + "\');";
+
+         esql.executeUpdate(query);
+
+         System.out.println("Technician added to database.");
+
+       }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
+
 	}
 
 	public static void BookFlight(DBproject esql) {//5
@@ -538,6 +593,72 @@ public class DBproject{
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
 		// For flight number and date, find the number of availalbe seats (i.e. total plane capacity minus booked seats )
+
+        // Given a flight number and a departure date, find the number of available seats in a flight.
+
+        // Flight(F):
+        //    - fnum
+        //    - cost
+        //    - num_sold *
+        //    - num_stops
+        //    - actual_departure_date *
+        //    - actual_arrival_date
+        //    - arrival_airport
+        //    - dpearture_airport
+        //
+        // Plane(P):
+        //    - id *
+        //    - make
+        //    - model
+        //    - age
+        //    - seats *
+        //
+        // FlightInfo(FI):
+        //    - fiid
+        //    - flight_id *
+        //    - pilot_id
+        //    - plane_id *
+
+        try{
+          // my code
+
+            // Get flight id
+			System.out.print("Please enter the Flight Number: ");
+			int user_provided_fnum = Integer.valueOf(in.readLine());
+
+            System.out.print("Please enter a departure date and time (i.e., 2014-05-01 16:45): ");
+            String user_provided_date_time = in.readLine();
+
+
+            ////////////////////////////////////////////////////////////////////////
+			// Get number of seats sold from flight
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum + " AND F.actual_departure_date=\'"+ user_provided_date_time + "\';").get(0).get(0));
+
+            System.out.println("Number of seats sold: " + seats_sold); // Debugging
+
+
+            ////////////////////////////////////////////////////////////////////////
+			//Get number of seats available on the plane.
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;").get(0).get(0));
+
+            System.out.println("Number of seats on plane: " + seats_total); // Debugging
+
+
+            ////////////////////////////////////////////////////////////////////////
+			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
+			int seats_available = seats_total - seats_sold;
+
+            System.out.println("There are " + seats_available + " seats available.");
+
+
+
+        }catch(Exception e){
+         System.err.println (e.getMessage());
+       }
+
+
+
+
 	}
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
@@ -553,7 +674,7 @@ public class DBproject{
 	}
 
 	// Added Functions
-	boolean validDate(String date) {
+	public static boolean validDate(String date) {
 		if (date.length()!=10) return false;
 
 		// Parse date, expected input YYYY-MM-DD
