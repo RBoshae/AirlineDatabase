@@ -559,8 +559,8 @@ public class DBproject{
 			// Insert Flight //
 			//===============//
 
-			// maxIDQuery is the current max primary id value in the flight table
-			int flightID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0));
+			// maxIDQuery is the current max primary id value in the flight table plus 1
+			int flightID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(fnum) FROM flight;").get(0).get(0)) + 1;
 
       String insertFlightStatement = "INSERT INTO flight VALUES (" + flightID
 									 + ", " + cost + ", " +  num_sold + ", "
