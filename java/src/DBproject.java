@@ -630,6 +630,84 @@ public class DBproject{
 
 	public static void BookFlight(DBproject esql) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
+		// Book Flight: Given a customer and flight that he/she wants to book, determine the status of the
+		//							reservation (Waitlisted/Confirmed/Reserved) and add the reservation to the database with appropriate status.
+		try{
+			String reservation_status = ""; // Used for Insert on Reservation table
+
+			// Get customer id
+			System.out.println("Please enter the Customer ID");
+			int customerID=Integer.valueOf(in.readLine());
+
+			// Check is customerID is valid
+			int customerExists = esql.executeQuery("SELECT * FROM Customer Where id="+customerID+";");
+
+			while (customerExists < 1) {
+				System.out.println("Customer ID does not exist. Please try again or enter q to return to menu.");
+				System.out.print("Enter Customer ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					System.out.println("Returning To Menu");
+					return;
+				}
+				customerID = Integer.valueOf(userInput);
+				customerExists = esql.executeQuery("SELECT * FROM Customer Where id="+customerID+";");
+			}
+
+			// Get flight id
+			System.out.println("Please enter the Flight Number to book: ");
+			int flightNumber = Integer.valueOf(in.readLine());
+
+			// Check is flightNumber is valid
+			int flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
+
+			while (flightExists < 1) {
+				System.out.println("Flight Number does not exist. Please try again or enter q to return to menu.");
+				System.out.print("Enter Flight Number: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					System.out.println("Returning To Menu");
+					return;
+				}
+				flightNumber = Integer.valueOf(userInput);
+				flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+			}
+
+			// Get number of seats sold from flight
+			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT F.num_sold FROM Flight F WHERE F.fnum="+ flightNumber +";").get(0).get(0));
+			System.out.println("Number of seats sold: " + seats_sold); // Debugging
+
+			//Get number of seats available on the plane.
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + flightNumber + " AND FI.plane_id=P.id;").get(0).get(0));
+			System.out.println("Number of seats on plane: " + seats_total); // Debugging
+
+			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
+			int seats_available = seats_total - seats_sold;
+			System.out.println("There are " + seats_available + " seats available.");
+
+			if(seats_available > 0) {
+				reservation_status = "R";
+			} else {
+				reservation_status = "W";
+			}
+
+			// Prepare to add reservation to the database with appropriate status
+			// Update number of seats sold in flight table.
+			esql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1");
+
+			// Generate rnum
+			int rnum = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(rnum) FROM Reservation;").get(0).get(0)) + 1;
+
+			String insertReservationStatement="INSERT INTO Reservation VALUES (" + rnum + ", " + customerID + ", " + flightNumber + ", \'" + reservation_status + "\');";
+			System.out.println(insertReservationStatement);
+			// Insert reservation to reservation table
+			esql.executeUpdate(insertReservationStatement);
+			System.out.println("Customer Added to Flight");
+
+
+		}catch(Exception e){
+			System.err.println (e.getMessage());
+		}
 	}
 
 	public static void ListNumberOfAvailableSeats(DBproject esql) {//6
@@ -704,26 +782,26 @@ public class DBproject{
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
 		// Count number of repairs per planes and list them in descending order
-        
+
         // List total number of repairs per plane in descending order
         // Return the list of planes in descreasing order of number of repairs that have been made on the planes
-        
+
         try{
           // my code
-          
+
           String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
 
           esql.executeQueryAndPrintResult(query);
-         
+
           System.out.println("List Total Number of Repairs completed.");
-          
-          
-          
-          
+
+
+
+
         }catch(Exception e){
          System.err.println (e.getMessage());
-       }  
-        
+       }
+
 	}
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
