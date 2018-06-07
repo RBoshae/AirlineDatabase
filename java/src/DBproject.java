@@ -638,18 +638,45 @@ public class DBproject{
 			// Get customer id
 			System.out.println("Please enter the Customer ID");
 			int customerID=Integer.valueOf(in.readLine());
-			// List<List<String>> query_result = esql.executeQueryAndReturnResult("SELECT fname, lname, gtype FROM customer WHERE id=" +customerID+";");
+
+			// Check is customerID is valid
+			int customerExists = esql.executeQuery("SELECT * FROM Customer Where id="+customerID+";");
+
+			while (customerExists < 1) {
+				System.out.println("Customer ID does not exist. Please try again or enter q to return to menu.");
+				System.out.print("Enter Customer ID: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				customerID = Integer.valueOf(userInput);
+				customerExists = esql.executeQuery("SELECT * FROM Customer Where id="+customerID+";");
+			}
 
 			// Get flight id
 			System.out.println("Please enter the Flight Number to book: ");
-			int user_provided_fnum = Integer.valueOf(in.readLine());
+			int flightNumber = Integer.valueOf(in.readLine());
+
+			// Check is flightNumber is valid
+			int flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+
+			while (flightExists < 1) {
+				System.out.println("Flight Numberdoes not exist. Please try again or enter q to return to menu.");
+				System.out.print("Enter Flight Number: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					return;
+				}
+				flightNumber = Integer.valueOf(userInput);
+				flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+			}
 
 			// Get number of seats sold from flight
 			int seats_sold = Integer.valueOf(esql.executeQueryAndReturnResult("Select F.num_sold FROM Flight F WHERE F.fnum="+ user_provided_fnum +";").get(0).get(0));
 			System.out.println("Number of seats sold: " + seats_sold); // Debugging
 
 			//Get number of seats available on the plane.
-			int seats_total = Integer.valueOf(espql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;"));
+			int seats_total = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT P.seats FROM FlightInfo FI, Plane P WHERE FI.flight_id=" + user_provided_fnum + " AND FI.plane_id=P.id;").get(0).get(0));
 			System.out.println("Number of seats on plane: " + seats_sold); // Debugging
 
 			// Compare number of seats sold from Flight table with number of seats available on plane from plane table.
@@ -664,9 +691,12 @@ public class DBproject{
 
 			// Prepare to add reservation to the database with appropriate status
 			// Update number of seats sold in flight table.
-			espql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1"); // HERE
+			espql.executeUpdate("UPDATE Flight SET num_sold =num_sold+1");
+
+			// Generate rnum
+			int rnum = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(rnum) FROM Reservation;").get(0).get(0)) + 1;
 			// Insert reservation to reservation table
-			espql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + user_provided_fnum + ", " + reservation_status + ";");
+			espql.executeUpdate("INSERT INTO Reservation VALUES " + rnum + ", " + customerID + ", " + flightNumber + ", " + reservation_status + ";");
 			System.out.println("Customer Added to Flight");
 
 
@@ -747,26 +777,26 @@ public class DBproject{
 
 	public static void ListsTotalNumberOfRepairsPerPlane(DBproject esql) {//7
 		// Count number of repairs per planes and list them in descending order
-        
+
         // List total number of repairs per plane in descending order
         // Return the list of planes in descreasing order of number of repairs that have been made on the planes
-        
+
         try{
           // my code
-          
+
           String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
 
           esql.executeQueryAndPrintResult(query);
-         
+
           System.out.println("List Total Number of Repairs completed.");
-          
-          
-          
-          
+
+
+
+
         }catch(Exception e){
          System.err.println (e.getMessage());
-       }  
-        
+       }
+
 	}
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
