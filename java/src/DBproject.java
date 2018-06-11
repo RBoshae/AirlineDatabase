@@ -883,6 +883,16 @@ public class DBproject{
 
             System.out.print("Please enter your status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
             String user_provided_status = in.readLine();
+            user_provided_status = user_provided_status.toUpperCase();
+            
+            if(  (user_provided_status != "W") && (user_provided_status != "R") && (user_provided_status != "C")  ) {
+                
+                System.out.println("Please enter a valid status. ");
+                
+                return;
+            }
+            
+            
 
             String query = "SELECT COUNT(*) FROM reservation R WHERE R.fid=" + user_provided_fnum + " AND R.status=\'" + user_provided_status + "\';";
 
