@@ -885,6 +885,8 @@ public class DBproject{
             String user_provided_status = in.readLine();
             user_provided_status = user_provided_status.toUpperCase();
             
+            System.out.println("status: " + user_provided_status);
+            
             if(  (user_provided_status != "W") && (user_provided_status != "R") && (user_provided_status != "C")  ) {
                 
                 System.out.println("Please enter a valid status. ");
