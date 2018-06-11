@@ -887,7 +887,7 @@ public class DBproject{
             
             System.out.println("status: " + user_provided_status);
             
-            if(  (user_provided_status != "W") && (user_provided_status != "R") && (user_provided_status != "C")  ) {
+            if(  (!user_provided_status.equals("W")) && (!user_provided_status.equals("R")) && (!user_provided_status.equals("C"))   {
                 
                 System.out.println("Please enter a valid status. ");
                 
