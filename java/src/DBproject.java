@@ -799,6 +799,7 @@ public class DBproject{
           
           String query = "SELECT plane.id AS PlaneID, (SELECT COUNT(*) FROM repairs WHERE repairs.plane_id=plane.id) AS PlaneCount FROM plane ORDER BY PlaneCount DESC;";
 
+          
           esql.executeQueryAndPrintResult(query);
 
           System.out.println("List Total Number of Repairs completed.");
