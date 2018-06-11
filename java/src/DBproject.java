@@ -797,7 +797,7 @@ public class DBproject{
           
           // String query = "SELECT P.id, nvl(R.nb_repairs, 0) FROM (SELECT plane.id FROM plane) P LEFT JOIN (SELECT plane_id, COUNT(*) AS nb_repairs FROM repairs GROUP BY plane_id ORDER BY nb_repairs DESC) R ON P.id=R.plane_id;";
           
-          String query = "SELECT P.id, COUNT(R.plane_id) AS Count FROM plane P LEFT OUTER JOIN repairs R ON R.plane_id=P.id GROUP BY P.id ORDER BY count DESC;";
+          String query = "SELECT plane.id AS PlaneID, (SELECT COUNT(*) FROM repairs WHERE repairs.plane_id=plane.id) AS PlaneCount FROM plane ORDER BY PlaneCount DESC;";
 
           esql.executeQueryAndPrintResult(query);
 
