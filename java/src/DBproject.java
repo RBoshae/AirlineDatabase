@@ -877,9 +877,24 @@ public class DBproject{
         try{
           // my code
 
-            // Get flight id
+            // Get flight id           
 			System.out.print("Please enter the Flight Number: ");
-			int user_provided_fnum = Integer.valueOf(in.readLine());
+			int flightNumber = Integer.valueOf(in.readLine());
+
+			// Check is flightNumber is valid
+			int flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
+
+			while (flightExists < 1) {
+				System.out.println("Flight Number does not exist. Please try again or enter q to return to menu.");
+				System.out.print("Enter Flight Number: ");
+				String userInput = in.readLine();
+				if (userInput.equals("q")) {
+					System.out.println("Returning To Menu");
+					return;
+				}
+				flightNumber = Integer.valueOf(userInput);
+				flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+			}
 
             System.out.print("Please enter your status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
             String user_provided_status = in.readLine();
@@ -896,7 +911,7 @@ public class DBproject{
             
             
 
-            String query = "SELECT COUNT(*) FROM reservation R WHERE R.fid=" + user_provided_fnum + " AND R.status=\'" + user_provided_status + "\';";
+            String query = "SELECT COUNT(*) FROM reservation R WHERE R.fid=" + flightNumber + " AND R.status=\'" + user_provided_status + "\';";
 
             esql.executeQueryAndPrintResult(query);
 
