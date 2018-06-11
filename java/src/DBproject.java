@@ -787,7 +787,9 @@ public class DBproject{
         try{
           // my code
 
-          String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
+          // String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
+          
+          String query = "SELECT plane.id, COUNT(repairs.plane_id) FROM plane LEFT JOIN repairs ON plane.id=repairs.plane_id GROUP BY plane.id ORDER BY count DESC;";
 
           esql.executeQueryAndPrintResult(query);
 
