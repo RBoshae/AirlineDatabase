@@ -387,7 +387,7 @@ public class DBproject{
 
 	         System.out.print("Enter fullname: ");
 	         String fullname = in.readLine();
-					 if (make.fullname(""))
+					 if (fullname.equals(""))
 	 				{
 	 					System.out.println("Invalid Name.");
 	 					return;
@@ -398,7 +398,7 @@ public class DBproject{
 
 	         System.out.print("Enter nationality: ");
 	         String nationality = in.readLine();
-					 if (make.nationality(""))
+					 if (nationality.equals(""))
 				 {
 					 System.out.println("Invalid Name.");
 					 return;
@@ -932,6 +932,25 @@ public class DBproject{
 			}
 		}
 
+		return true;
+	}
+
+	public static boolean validTime(String time) {
+		if (time.length()!=5) return false;
+
+		// Parse date, expected input YYYY-MM-DD
+		String[] parsedTime = time.split(":");
+		int hour = Integer.valueOf(parsedTime[0]);
+		int minute = Integer.valueOf(parsedTime[1]);
+
+		// validate year
+		if (hour < 0 || hour > 23) {
+			return false;
+		}
+		// Validate Month
+		if (minute < 0 || minute >59 ) {
+			return false;
+		}
 		return true;
 	}
 
