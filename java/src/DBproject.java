@@ -893,7 +893,7 @@ public class DBproject{
 					return;
 				}
 				flightNumber = Integer.valueOf(userInput);
-				flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+				flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
 			}
 
             System.out.print("Please enter your status (i.e., W=Waitlisted, R=Reserved, C=Confirmed): ");
