@@ -696,7 +696,7 @@ public class DBproject{
 					return;
 				}
 				flightNumber = Integer.valueOf(userInput);
-				flightExists = esql.executeQuery("SELECT * FROM Flight Where id="+flightNumber+";");
+				flightExists = esql.executeQuery("SELECT * FROM Flight Where fnum="+flightNumber+";");
 			}
 
 			// Get number of seats sold from flight
