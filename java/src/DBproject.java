@@ -317,17 +317,36 @@ public class DBproject{
 				System.out.print("Enter make: ");
 				make = in.readLine();
 
+				if (make.equals(""))
+				{
+					System.out.println("Invalid Make.");
+					return;
+				}
+
 				// Prompt user for model
 				System.out.print("Enter model: ");
 				model = in.readLine();
+				if (model.equals(""))
+				{
+					System.out.println("Invalid Model.");
+					return;
+				}
 
 				// Prompt user for age
 				System.out.print("Enter age: ");
 				age = in.readLine();
+				if (Integer.valueOf(age) < 0 || Integer.valueOf(age) > 120){
+					System.out.println("Invalid Age");
+					return;
+				}
 
 				// Prompt user for seats
 				System.out.print("Enter number of seats: ");
 				seats = in.readLine();
+				if (Integer.valueOf(seats) < 0 || Integer.valueOf(seats) > 999){
+					System.out.println("Invalid Number of Seats");
+					return;
+				}
 
 				System.out.println("Make: " + make + ", Model: " + model + ", Age: " + age + ", Seats: " + seats);
 
@@ -360,35 +379,42 @@ public class DBproject{
 	}
 
 	public static void AddPilot(DBproject esql) {//2
+		try{
+	         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
+	         getID++;
 
-	try{
+			 //System.out.println("current ID: " + getID); // debugging output
 
-         // my code
+	         System.out.print("Enter fullname: ");
+	         String fullname = in.readLine();
+					 if (make.fullname(""))
+	 				{
+	 					System.out.println("Invalid Name.");
+	 					return;
+	 				}
 
-         int getID = Integer.valueOf(esql.executeQueryAndReturnResult("SELECT max(id) FROM Pilot;").get(0).get(0));
-         getID++;
 
-		 //System.out.println("current ID: " + getID); // debugging output
+	         //System.out.println("fullname: " + fullname); // debugging output
 
-         System.out.print("Enter fullname: ");
-         String fullname = in.readLine();
+	         System.out.print("Enter nationality: ");
+	         String nationality = in.readLine();
+					 if (make.nationality(""))
+				 {
+					 System.out.println("Invalid Name.");
+					 return;
+				 }
 
-         //System.out.println("fullname: " + fullname); // debugging output
+	         //System.out.println("nationality: " + nationality); // debugging output
 
-         System.out.print("Enter nationality: ");
-         String nationality = in.readLine();
+	         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
 
-         //System.out.println("nationality: " + nationality); // debugging output
+	         esql.executeUpdate(query);
 
-         String query = "INSERT INTO Pilot VALUES(" + getID + ", \'" + fullname + "\', \'" + nationality + "\');";
+	         System.out.println("Pilot added to database.");
 
-         esql.executeUpdate(query);
-
-         System.out.println("Pilot added to database.");
-
-	}catch(Exception e){
-         System.err.println (e.getMessage());
-    }
+		}catch(Exception e){
+	         System.err.println (e.getMessage());
+	    }
 
 	}
 
@@ -790,18 +816,18 @@ public class DBproject{
           // my code
 
           // String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
-          
+
           // String query = "SELECT plane.id, COUNT(repairs.plane_id) FROM plane LEFT OUTER JOIN repairs ON plane.id=repairs.plane_id GROUP BY plane.id ORDER BY count DESC;";
-          
+
           // String query = "SELECT P.id, COUNT(R.plane_id) FROM plane P, repairs R WHERE P.id=R.plane_id GROUP BY P.id ORDER BY count DESC;";
-          
+
           // String query = "SELECT P.id, COUNT(*) FROM plane P, repairs R WHERE P.id=R.plane_id GROUP BY P.id ORDER BY count DESC;";
-          
+
           // String query = "SELECT P.id, nvl(R.nb_repairs, 0) FROM (SELECT plane.id FROM plane) P LEFT JOIN (SELECT plane_id, COUNT(*) AS nb_repairs FROM repairs GROUP BY plane_id ORDER BY nb_repairs DESC) R ON P.id=R.plane_id;";
-          
+
           String query = "SELECT plane.id AS PlaneID, (SELECT COUNT(*) FROM repairs WHERE repairs.plane_id=plane.id) AS PlaneCount FROM plane ORDER BY PlaneCount DESC;";
 
-          
+
           esql.executeQueryAndPrintResult(query);
 
           System.out.println("List Total Number of Repairs completed.");
@@ -817,37 +843,37 @@ public class DBproject{
 
 	public static void ListTotalNumberOfRepairsPerYear(DBproject esql) {//8
 		// Count repairs per year and list them in ascending order
-        
+
         // List total number of repairs per year in ascending order
         // Return the years with the number of repairs made in those years in ascending order of number of repairs per year
-        
-        
+
+
         try{
           // my code
-          
+
           String query = "SELECT date_part('year', repair_date), COUNT(*) FROM repairs GROUP BY date_part('year', repair_date) ORDER BY count ASC;";
 
           esql.executeQueryAndPrintResult(query);
-         
+
           System.out.println("List Total Number of Repairs completed.");
-          
-          
-          
-          
+
+
+
+
         }catch(Exception e){
          System.err.println (e.getMessage());
-       }  
-        
-        
+       }
+
+
 	}
 
 	public static void FindPassengersCountWithStatus(DBproject esql) {//9
 		// Find how many passengers there are with a status (i.e. W,C,R) and list that number.
-        
+
         // Find the total number of passengers with a given status
         // For a given flight and passenger status, return the number of passengers with the given status
-        
-        
+
+
         try{
           // my code
 
@@ -869,10 +895,10 @@ public class DBproject{
         }catch(Exception e){
          System.err.println (e.getMessage());
        }
-        
-        
-        
-        
+
+
+
+
 	}
 
 	// Added Functions
