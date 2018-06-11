@@ -789,8 +789,19 @@ public class DBproject{
         try{
           // my code
 
-          String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
+          // String query = "SELECT R.plane_id, COUNT(*) FROM repairs R GROUP BY R.plane_id ORDER BY count DESC;";
+          
+          // String query = "SELECT plane.id, COUNT(repairs.plane_id) FROM plane LEFT OUTER JOIN repairs ON plane.id=repairs.plane_id GROUP BY plane.id ORDER BY count DESC;";
+          
+          // String query = "SELECT P.id, COUNT(R.plane_id) FROM plane P, repairs R WHERE P.id=R.plane_id GROUP BY P.id ORDER BY count DESC;";
+          
+          // String query = "SELECT P.id, COUNT(*) FROM plane P, repairs R WHERE P.id=R.plane_id GROUP BY P.id ORDER BY count DESC;";
+          
+          // String query = "SELECT P.id, nvl(R.nb_repairs, 0) FROM (SELECT plane.id FROM plane) P LEFT JOIN (SELECT plane_id, COUNT(*) AS nb_repairs FROM repairs GROUP BY plane_id ORDER BY nb_repairs DESC) R ON P.id=R.plane_id;";
+          
+          String query = "SELECT plane.id AS PlaneID, (SELECT COUNT(*) FROM repairs WHERE repairs.plane_id=plane.id) AS PlaneCount FROM plane ORDER BY PlaneCount DESC;";
 
+          
           esql.executeQueryAndPrintResult(query);
 
           System.out.println("List Total Number of Repairs completed.");
